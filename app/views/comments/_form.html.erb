@@ -3,12 +3,12 @@
   <!-- Author (cambiar cuando se implemente devise) -->
   <div class="field">
     <%= f.label :author %>
-    <%= f.text_field :author %>
+    <%= f.text_field :author, maxlength: 20 %>
   </div>
-  <!-- Cuerpo del comentario -->
+  <!-- Comentario -->
   <div class="field">
     <%= f.label :content %>
-    <%= f.text_area :content %>
+    <%= f.text_area :content, minlength: 2, maxlength: 300 %>
   </div>
   <!-- Boton crear commentario -->
   <div class="actions">
