@@ -12,6 +12,9 @@
   <div class="comment">
     <p><strong><%= comment.author %></strong>:</p>
     <p><%= simple_format(comment.content) %></p>
+    <% if current_user && (current_user.admin? || current_user.email == comment.author) %>
+      <%= link_to 'Edit', edit_post_comment_path(@post, comment) %>
+    <% end %>
   </div>
 <% end %>
 <!-- Crear Comentarios -->

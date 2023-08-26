@@ -1,10 +1,17 @@
 class CommentsController < ApplicationController
-  before_action :set_post_comment, only: %i[show edit update destroy create]
+  before_action :set_post_comment, only: %i[show edit update destroy create new]
   before_action :authenticate_user!, except: %i[show create]
   before_action :authorize_comment_edit, only: %i[edit update destroy]
 
+  def new
+    return unless user_signed_in?
+
+    @comment = @post.comments.build
+  end
+
   def create
-    @comment = user_signed_in? ? @post.comments.build(comment_params.merge(author: current_user.email)) : @post.comments.build(comment_params)
+    @comment = @post.comments.build(comment_params)
+    @comment.user = current_user if user_signed_in?
     respond_to do |format|
       if @comment.save
         format.html { redirect_to @post, notice: 'Comment was successfully created.' }
@@ -18,7 +25,17 @@ class CommentsController < ApplicationController
 
   def edit; end
 
-  def update; end
+  def update
+    respond_to do |format|
+      if @comment.update(comment_params)
+        format.html { redirect_to @post, notice: 'Comment was successfully updated.' }
+        format.json { render :show, status: :ok, location: @post }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @comment.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 
   def destroy; end
 
@@ -26,6 +43,7 @@ class CommentsController < ApplicationController
 
   def set_post_comment
     @post = Post.find(params[:post_id])
+    @comment = Comment.find(params[:id]) if params[:id]
   end
 
   def comment_params
@@ -33,7 +51,7 @@ class CommentsController < ApplicationController
   end
 
   def authorize_comment_edit
-    return if current_user.admin? || @comment.user == current_user
+    return if current_user.admin? || (@comment && @comment.user == current_user)
 
     redirect_to root_path, alert: 'You are not authorized to perform this action.'
   end
