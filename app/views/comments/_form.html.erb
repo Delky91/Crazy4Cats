@@ -1,10 +1,12 @@
 <!-- Cuestionario para crear nuevos comentarios -->
 <%= form_for([@post, Comment.new]) do |f| %>
   <!-- Author (cambiar cuando se implemente devise) -->
-  <div class="field">
-    <%= f.label :author %>
-    <%= f.text_field :author, maxlength: 20 %>
-  </div>
+  <% unless user_signed_in? %>
+    <div class="field">
+      <%= f.label :author %>
+      <%= f.text_field :author, maxlength: 20 %>
+    </div>
+  <% end %>
   <!-- Comentario -->
   <div class="field">
     <%= f.label :content %>
