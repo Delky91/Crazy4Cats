@@ -1,10 +1,17 @@
 <p style="color: green"><%= notice %></p>
-
+<!-- Mostrar el post -->
 <%= render @post %>
-
 <div>
   <%= link_to "Edit this post", edit_post_path(@post) %> |
   <%= link_to "Back to posts", posts_path %>
-
   <%= button_to "Destroy this post", @post, method: :delete %>
 </div>
+<!-- Mostrar los comentarios -->
+<h2>Comments</h2>
+<% @comments.each do |comment| %>
+  <div class="comment">
+    <p><strong><%= comment.user.username %></strong>: <%= comment.content %></p>
+  </div>
+<% end %>
+<!-- Crear Comentarios -->
+<%= render 'comments/form' %>

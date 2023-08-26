@@ -1,0 +1,17 @@
+<!-- Cuestionario para crear nuevos comentarios -->
+<%= form_for([@post, Comment.new]) do |f| %>
+  <!-- Author (cambiar cuando se implemente devise) -->
+  <div class="field">
+    <%= f.label :author %>
+    <%= f.text_field :author %>
+  </div>
+  <!-- Cuerpo del comentario -->
+  <div class="field">
+    <%= f.label :content %>
+    <%= f.text_area :content %>
+  </div>
+  <!-- Boton crear commentario -->
+  <div class="actions">
+    <%= f.submit 'Create Comment' %>
+  </div>
+<% end %>
