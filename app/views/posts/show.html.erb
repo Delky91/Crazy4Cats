@@ -27,14 +27,8 @@
 <h2>Comments</h2>
 <% @comments.each do |comment| %>
   <div class="comment">
-    <p>
-      <strong>
-        <% if comment.author == "anonimo@example.com" %>
-          Anonimo
-        <% else %>
-          <%= comment.author %>
-        <% end %>
-      </strong>:
+    <p class="fw-bold">
+      <%= comment.author == "anonimo@example.com" ? "Anonimo" : comment.author %>:
     </p>
     <p><%= simple_format(comment.content) %></p>
     <% if current_user && (current_user.admin? || current_user.email == comment.author) %>
