@@ -1,9 +1,24 @@
 <p style="color: green"><%= notice %></p>
 <!-- Mostrar el post -->
 <%= render @post %>
+<!-- Reacciones -->
+<% if current_user && (current_user.admin? || current_user == @post.user) %>
+  <div>
+    <% Reaction.reaction_type.each do |reaction_type| %>
+      <%= button_to "#{reaction_type}", user_reaction_path(post_id: @post.id, reaction_type: reaction_type), method: :post %>
+    <% end %>
+  </div>
+<% end %>
+<div>
+  <%= @post.count_with_reaction_type('like') %>
+</div>
+<div>
+  <%= @post.count_with_reaction_type('dislike') %>
+</div>
+<!-- link y botones de Accion de post -->
 <div>
   <%= link_to "Back to posts", posts_path %>
-  <% if current_user.admin? || current_user == @post.user%>
+  <% if current_user && (current_user.admin? || current_user == @post.user) %>
     <%= link_to "Edit this post", edit_post_path(@post) %> |
     <%= button_to "Destroy this post", @post, method: :delete %>
   <% end %>
@@ -12,7 +27,15 @@
 <h2>Comments</h2>
 <% @comments.each do |comment| %>
   <div class="comment">
-    <p><strong><%= comment.author %></strong>:</p>
+    <p>
+      <strong>
+        <% if comment.author == "anonimo@example.com" %>
+          Anonimo
+        <% else %>
+          <%= comment.author %>
+        <% end %>
+      </strong>:
+    </p>
     <p><%= simple_format(comment.content) %></p>
     <% if current_user && (current_user.admin? || current_user.email == comment.author) %>
       <%= link_to 'Edit', edit_post_comment_path(@post, comment) %>
@@ -21,3 +44,4 @@
 <% end %>
 <!-- Crear Comentarios -->
 <%= render 'comments/form' %>
+<%= turbo_stream_from @post %>

@@ -17,6 +17,7 @@ class CommentsController < ApplicationController
   def create
     @comment = @post.comments.build(comment_params)
     @comment.user = current_user if user_signed_in?
+    @comment.user ||= User.find_by(email: 'anonimo@example.com') # Buscar usuario genérico si no hay usuario conectado
     respond_to do |format|
       if @comment.save
         format.html { redirect_to @post, notice: 'Comment was successfully created.' }

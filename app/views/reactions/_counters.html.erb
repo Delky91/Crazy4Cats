@@ -1,0 +1,7 @@
+<div class="container">
+  <ul>
+    <% Reaction.reaction_type.each do |reaction_type| %>
+      <li> <%= @post.count_with_reaction_type(reaction_type) %>
+      <% end %>
+    </ul>
+  </div>

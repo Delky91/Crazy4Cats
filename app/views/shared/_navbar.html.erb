@@ -17,6 +17,11 @@
             <li><%= link_to 'Registro', new_user_registration_path, class: 'dropdown-item'%></li>
           </ul>
         </li>
+        <% if user_signed_in? %>
+          <li class="nav-item">
+            <%= link_to 'Tus reacciones', my_reactions_path, class: 'nav-link' %>
+          </li>
+        <% end %>
       </ul>
     </div>
   </div>

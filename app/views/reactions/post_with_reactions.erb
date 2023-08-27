@@ -1,0 +1,12 @@
+<h1>Post</h1>
+<ul>
+  <% @post.each do |post| %>
+    <li>
+      <%= post.title %> -
+      <%= post.find_reaction_type_user_relation(current_user) %>
+      <p>
+        <%= link_to "Show this post", post %>
+      </p>
+    </li>
+  <% end %>
+</ul>
