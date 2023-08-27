@@ -1,0 +1,10 @@
+<div class="border rounded-4 p-3">
+  <%= render @comment %>
+  <% if user_signed_in? && (@comment.user == current_user || current_user.admin?) %>
+    <div class="d-flex gap-4 align-items-center justify-content-center">
+      <%= link_to "Edit", edit_post_comment_path(@comment.post, @comment), class: "link-warning" %>
+      <%= link_to "Back", post_comments_path(@comment.post), class: "link-warning" %>
+      <%= button_to "Delete", post_comment_path(@comment.post, @comment), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-sm btn-outline-danger" %>
+    </div>
+  <% end %>
+</div>

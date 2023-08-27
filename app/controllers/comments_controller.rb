@@ -9,6 +9,11 @@ class CommentsController < ApplicationController
     @comment = @post.comments.build
   end
 
+  def show
+    @post = Post.find(params[:post_id])
+    @comments = @post.comments
+  end
+
   def create
     @comment = @post.comments.build(comment_params)
     @comment.user = current_user if user_signed_in?
@@ -37,7 +42,17 @@ class CommentsController < ApplicationController
     end
   end
 
-  def destroy; end
+  def destroy
+    if current_user.admin? || current_user == @comment.user
+      @comment.destroy
+      respond_to do |format|
+        format.html { redirect_to @post, notice: 'Comment was successfully deleted.' }
+        format.json { head :no_content }
+      end
+    else
+      redirect_to @post, alert: 'You are not authorized to delete this comment.'
+    end
+  end
 
   private
 

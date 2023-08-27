@@ -6,5 +6,6 @@
   </div>
   <div class="actions">
     <%= f.submit 'Update Comment' %>
+    <%= link_to 'Delete Comment', post_comment_path(@post, @comment), method: :delete, data: { confirm: 'Are you sure?' } %>
   </div>
 <% end %>

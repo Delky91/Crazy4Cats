@@ -1,0 +1,12 @@
+<div id="<%= dom_id comment %>">
+  <p class="fs-4 fw-bold">
+    <%= comment.author %>
+  </p>
+  <p class="fs-6">
+    <%= comment.content %>
+  </p>
+  <p class="fs-6 fst-italic text-end mt-5">
+    By: 
+    <%= comment.user.email %>
+  </p>
+</div>
