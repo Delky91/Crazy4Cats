@@ -1,10 +1,12 @@
 <div id="<%= dom_id post %>">
-  <p>
-    <strong>Title:</strong>
+  <p class="fs-4 fw-bold">
     <%= post.title %>
   </p>
-  <p>
-    <strong>Content:</strong>
+  <p class="fs-6">
     <%= simple_format(post.content) %>
+  </p>
+  <p class="fs-6 fst-italic text-end mt-5">
+    By: 
+    <%= post.user.email %>
   </p>
 </div>

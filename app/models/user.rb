@@ -6,9 +6,9 @@ class User < ApplicationRecord
 
   before_create :set_default_role
 
-  has_many :posts, through: :reactions
-  has_many :comments, dependent: :destroy
+  has_many :posts
   has_many :reactions, dependent: :destroy
+  has_many :comments, dependent: :destroy
 
   def admin?
     role == 'admin'

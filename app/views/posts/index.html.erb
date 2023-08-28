@@ -1,13 +1,16 @@
-<p style="color: green"><%= notice %></p>
-<h1>Posts</h1>
-<div id="posts">
-  <% @posts.each do |post| %>
-    <%= render post %>
-    <p>
-      <%= link_to "Show this post", post %>
-    </p>
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <h1 class="display-5 text-warning">Posts</h1>
+  <% if user_signed_in? %>
+    <%= link_to "New post", new_post_path, class: "btn btn-outline-warning btn-sm" %>
   <% end %>
 </div>
-<% if user_signed_in? %>
-  <%= link_to "New post", new_post_path %>
-<% end %>
+<div id="posts">
+  <% @posts.each do |post| %>
+    <div class="mb-5 border p-3 rounded-4">
+      <%= render post %>
+      <p>
+        <%= link_to "Show this post", post, class: "link-warning" %>
+      </p>
+    </div>
+  <% end %>
+</div>

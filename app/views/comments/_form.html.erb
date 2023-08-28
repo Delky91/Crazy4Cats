@@ -1,12 +1,14 @@
 <!-- Cuestionario para crear nuevos comentarios -->
 <%= form_for([@post, Comment.new]) do |f| %>
-  <!-- Comentario -->
-  <div class="field">
-    <%= f.label :content %>
-    <%= f.text_area :content, minlength: 2, maxlength: 300 %>
-  </div>
-  <!-- Boton crear commentario -->
-  <div class="actions">
-    <%= f.submit 'Create Comment' %>
+  <div class="d-flex flex-column">
+    <!-- Comentario -->
+    <div class="field">
+      <%= f.label :content, class: "d-block mb-2 fs-5" %>
+      <%= f.text_area :content, minlength: 2, maxlength: 300, class:"w-100 p-2 rounded-2", rows: 5 %>
+    </div>
+    <!-- Boton crear commentario -->
+    <div class="actions">
+      <%= f.submit 'Create Comment', class: "btn btn-sm btn-outline-warning my-2" %>
+    </div>
   </div>
 <% end %>
